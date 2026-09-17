@@ -1,12 +1,12 @@
 {
   "mappings": [
-    "/content/aem-boilerplate-xcom/:/",
-    "/content/aem-boilerplate-xcom/configuration:/.helix/config.json",
-    "/content/aem-boilerplate-xcom/headers:/.helix/headers.json",
-    "/content/aem-boilerplate-xcom/metadata:/metadata.json",
-    "/content/aem-boilerplate-xcom.resource/enrichment/enrichment.json:/enrichment/enrichment.json"
+    "/content/2026/38/agilebear27274/:/",
+    "/content/2026/38/agilebear27274/configuration:/.helix/config.json",
+    "/content/2026/38/agilebear27274/headers:/.helix/headers.json",
+    "/content/2026/38/agilebear27274/metadata:/metadata.json",
+    "/content/2026/38/agilebear27274.resource/enrichment/enrichment.json:/enrichment/enrichment.json"
   ],
   "includes": [
-    "/content/aem-boilerplate-xcom/"
+    "/content/2026/38/agilebear27274/"
   ]
 }
