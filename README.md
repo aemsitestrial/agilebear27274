@@ -5,8 +5,8 @@ This project boilerplate is for AEM Authoring with Edge Delivery Services (aka C
 ## Documentation
 
 ## Environments
-- Preview: https://main--aem-boilerplate-xcom--aemsitestrial.aem.page/
-- Live: https://main--aem-boilerplate-xcom--aemsitestrial.aem.live/
+- Preview: https://main--agilebear27274--aemsitestrial.aem.page/
+- Live: https://main--agilebear27274--aemsitestrial.aem.live/
 
 Before using the boilerplate, we recommend you to go through the documentation on <https://experienceleague.adobe.com/developer/commerce/storefront/> and more specifically:
 
