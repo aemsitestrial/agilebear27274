@@ -160,11 +160,53 @@
         "multi": false
       },
       {
+        "component": "text",
+        "name": "tag",
+        "label": "Tag"
+      },
+      {
+        "component": "text",
+        "name": "category",
+        "label": "Category"
+      },
+      {
+        "component": "text",
+        "name": "readingTime",
+        "label": "Reading Time"
+      },
+      {
+        "component": "text",
+        "name": "publishedDate",
+        "label": "Published Date"
+      },
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Title"
+      },
+      {
         "component": "richtext",
-        "name": "text",
+        "name": "description",
         "value": "",
-        "label": "Content",
+        "label": "Description",
         "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "authorImage",
+        "label": "Author Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "authorName",
+        "label": "Author Name"
+      },
+      {
+        "component": "text",
+        "name": "authorRole",
+        "label": "Author Role"
       }
     ]
   },
