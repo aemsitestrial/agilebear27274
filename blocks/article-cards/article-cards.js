@@ -5,7 +5,7 @@ function textOf(div) {
   return div ? div.textContent.trim() : '';
 }
 
-function buildMetaItem(div, className, tag = 'span') {
+function buildTextEl(div, className, tag = 'span') {
   const el = document.createElement(tag);
   el.className = className;
   if (div) {
@@ -27,6 +27,9 @@ export default function decorate(block) {
       publishedDateDiv,
       titleDiv,
       descriptionDiv,
+      linkDiv,
+      linkTextDiv,
+      ctaStyleDiv,
       authorImageDiv,
       authorNameDiv,
       authorRoleDiv,
@@ -45,19 +48,35 @@ export default function decorate(block) {
     const meta = document.createElement('div');
     meta.className = 'article-card-meta';
     meta.append(
-      buildMetaItem(tagDiv, 'article-card-tag'),
-      buildMetaItem(categoryDiv, 'article-card-category'),
-      buildMetaItem(readingTimeDiv, 'article-card-reading-time'),
+      buildTextEl(tagDiv, 'article-card-tag'),
+      buildTextEl(categoryDiv, 'article-card-category'),
+      buildTextEl(readingTimeDiv, 'article-card-reading-time'),
     );
 
-    const published = buildMetaItem(publishedDateDiv, 'article-card-published', 'p');
-    const title = buildMetaItem(titleDiv, 'article-card-title', 'h2');
+    const published = buildTextEl(publishedDateDiv, 'article-card-published', 'p');
+    const title = buildTextEl(titleDiv, 'article-card-title', 'h2');
 
     const description = document.createElement('div');
     description.className = 'article-card-description';
     if (descriptionDiv) {
       moveInstrumentation(descriptionDiv, description);
       while (descriptionDiv.firstElementChild) description.append(descriptionDiv.firstElementChild);
+    }
+
+    const linkAnchor = linkDiv ? linkDiv.querySelector('a') : null;
+    const linkHref = linkAnchor ? linkAnchor.getAttribute('href') : null;
+    const linkLabel = textOf(linkTextDiv);
+    if (linkHref && linkLabel) {
+      const isButton = textOf(ctaStyleDiv).toLowerCase() === 'button';
+      const ctaWrapper = document.createElement('p');
+      ctaWrapper.className = 'button-container';
+      const cta = document.createElement('a');
+      cta.className = isButton ? 'button primary' : 'button';
+      cta.href = linkHref;
+      cta.textContent = linkLabel;
+      moveInstrumentation(linkTextDiv, cta);
+      ctaWrapper.append(cta);
+      description.append(ctaWrapper);
     }
 
     const authorImage = document.createElement('div');
@@ -70,8 +89,8 @@ export default function decorate(block) {
     const authorInfo = document.createElement('div');
     authorInfo.className = 'article-card-author-info';
     authorInfo.append(
-      buildMetaItem(authorNameDiv, 'article-card-author-name', 'p'),
-      buildMetaItem(authorRoleDiv, 'article-card-author-role', 'p'),
+      buildTextEl(authorNameDiv, 'article-card-author-name', 'p'),
+      buildTextEl(authorRoleDiv, 'article-card-author-role', 'p'),
     );
 
     const author = document.createElement('div');

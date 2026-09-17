@@ -44,51 +44,67 @@
         },
         {
           "component": "text",
-          "name": "tag",
+          "name": "meta_tag",
           "label": "Tag"
         },
         {
           "component": "text",
-          "name": "category",
+          "name": "meta_category",
           "label": "Category"
         },
         {
           "component": "text",
-          "name": "readingTime",
+          "name": "meta_readingTime",
           "label": "Reading Time"
         },
         {
           "component": "text",
-          "name": "publishedDate",
+          "name": "meta_publishedDate",
           "label": "Published Date"
         },
         {
           "component": "text",
-          "name": "title",
+          "name": "content_title",
           "label": "Title"
         },
         {
           "component": "richtext",
-          "name": "description",
+          "name": "content_description",
           "value": "",
           "label": "Description",
           "valueType": "string"
         },
         {
+          "component": "aem-content",
+          "name": "content_link",
+          "label": "Link"
+        },
+        {
+          "component": "text",
+          "name": "content_linkText",
+          "label": "Link Text"
+        },
+        {
+          "component": "text",
+          "name": "content_ctaStyle",
+          "label": "CTA Style",
+          "description": "Leave empty for an arrow link, or type \"button\" for a solid button"
+        },
+        {
           "component": "reference",
           "valueType": "string",
-          "name": "authorImage",
+          "name": "author_image",
           "label": "Author Image",
           "multi": false
         },
         {
           "component": "text",
-          "name": "authorName",
+          "name": "author_name",
           "label": "Author Name"
         },
         {
           "component": "text",
-          "name": "authorRole",
+          "name": "author_role",
           "label": "Author Role"
         }
       ]
