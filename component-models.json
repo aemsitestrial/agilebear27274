@@ -160,11 +160,69 @@
         "multi": false
       },
       {
+        "component": "text",
+        "name": "meta_tag",
+        "label": "Tag"
+      },
+      {
+        "component": "text",
+        "name": "meta_category",
+        "label": "Category"
+      },
+      {
+        "component": "text",
+        "name": "meta_readingTime",
+        "label": "Reading Time"
+      },
+      {
+        "component": "text",
+        "name": "meta_publishedDate",
+        "label": "Published Date"
+      },
+      {
+        "component": "text",
+        "name": "content_title",
+        "label": "Title"
+      },
+      {
         "component": "richtext",
-        "name": "text",
+        "name": "content_description",
         "value": "",
-        "label": "Content",
+        "label": "Description",
         "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "content_link",
+        "label": "Link"
+      },
+      {
+        "component": "text",
+        "name": "content_linkText",
+        "label": "Link Text"
+      },
+      {
+        "component": "text",
+        "name": "content_ctaStyle",
+        "label": "CTA Style",
+        "description": "Leave empty for an arrow link, or type \"button\" for a solid button"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "author_image",
+        "label": "Author Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "author_name",
+        "label": "Author Name"
+      },
+      {
+        "component": "text",
+        "name": "author_role",
+        "label": "Author Role"
       }
     ]
   },

@@ -35,6 +35,9 @@
           "...": "../blocks/cards/_*.json#/definitions"
         },
         {
+          "...": "../blocks/article-cards/_*.json#/definitions"
+        },
+        {
           "...": "../blocks/columns/_*.json#/definitions"
         },
         {
