@@ -386,6 +386,12 @@
     ]
   },
   {
+    "id": "article-cards",
+    "components": [
+      "article-card"
+    ]
+  },
+  {
     "id": "cards",
     "components": [
       "card"
