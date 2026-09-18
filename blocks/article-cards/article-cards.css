@@ -1,172 +1,264 @@
-.article-cards-container .article-cards-wrapper {
-  margin-top: var(--spacing-xbig);
+.insight-cards-wrapper,
+.insight-cards {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 32px 16px;
+  background-color: #fff;
+  color: #1a1a1a;
+  font-family: Arial, sans-serif;
 }
-
-.article-cards > ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--spacing-small);
-}
-
-.article-cards > ul > li {
-  background: var(--color-neutral-50);
-  border: var(--shape-border-width-1) solid var(--color-neutral-300);
+ 
+.insight-cards .insight-cards-grid {
   display: flex;
   flex-direction: column;
-}
-
-.article-cards .article-card-image {
-  line-height: 0;
-}
-
-.article-cards .article-card-image img {
+  gap: 24px;
   width: 100%;
-  aspect-ratio: 4 / 3;
+  max-width: 1240px;
+  margin: 0 auto;
+}
+ 
+/* Individual Card Base */
+.insight-cards .insight-card {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  box-sizing: border-box;
+  border-radius: 2px;
+  background-color: #fff;
+}
+ 
+.insight-cards .featured-card {
+  padding: 32px 28px;
+  background-color: #e8e8e8;
+}
+ 
+/* Card Hero Image */
+.insight-cards .card-image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  margin-bottom: 20px;
+  overflow: hidden;
+  border-radius: 2px;
+}
+ 
+.insight-cards .card-image-wrapper img,
+.insight-cards .card-image-wrapper picture {
   display: block;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
 }
-
-.article-cards .article-card-body {
+ 
+/* Card Body Layout */
+.insight-cards .card-body {
   display: flex;
-  flex-direction: column;
   flex: 1;
-  padding: var(--spacing-medium);
+  flex-direction: column;
 }
-
-.article-cards .article-card-meta {
+ 
+.insight-cards .card-meta-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+ 
+.insight-cards .card-badges {
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
-  gap: var(--spacing-xsmall);
-  margin-bottom: var(--spacing-small);
+  gap: 8px;
 }
-
-.article-cards .article-card-tag {
-  background: #d8e4f3;
-  color: var(--color-neutral-900);
-  padding: 4px 10px;
-  font-size: 1.1rem;
+ 
+.insight-cards .badge {
+  padding: 4px 8px;
+  font-size: 9px;
   font-weight: 700;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.5px;
   text-transform: uppercase;
 }
-
-.article-cards .article-card-category {
-  color: var(--color-neutral-700);
-  font-size: 1.1rem;
+ 
+.insight-cards .badge-category {
+  background-color: #d8e2f0;
+  color: #2b4263;
+}
+ 
+.insight-cards .badge-subcategory {
+  background-color: transparent;
+  color: #666;
   font-weight: 600;
-  letter-spacing: 0.04em;
+}
+ 
+.insight-cards .card-read-time {
+  color: #707070;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
   text-transform: uppercase;
 }
-
-.article-cards .article-card-reading-time {
-  margin-left: auto;
-  color: var(--color-neutral-700);
-  font-size: 1.1rem;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  white-space: nowrap;
+ 
+.insight-cards .card-publish-date {
+  margin: 0 0 12px;
+  color: #666;
+  font-size: 12px;
 }
-
-.article-cards .article-card-published {
-  margin: 0 0 var(--spacing-xsmall);
-  color: var(--color-neutral-700);
-  font-size: 1.2rem;
+ 
+/* Title Styling */
+.insight-cards .card-title-wrapper {
+  margin-bottom: 14px;
 }
-
-.article-cards .article-card-title {
-  margin: 0 0 var(--spacing-small);
-  font: normal normal 400 2rem/1.2 var(--body-font-family, inherit);
-  color: var(--color-neutral-900);
-}
-
-.article-cards .article-card-description {
-  color: var(--color-neutral-700);
-  font-size: 1.4rem;
-  line-height: 1.6;
-}
-
-.article-cards .article-card-description p {
-  margin: 0 0 var(--spacing-small);
-}
-
-.article-cards .article-card-description .button-container {
+ 
+.insight-cards .card-title-wrapper h1,
+.insight-cards .card-title-wrapper h2,
+.insight-cards .card-title-wrapper h3,
+.insight-cards .card-title-wrapper h4,
+.insight-cards .card-title-wrapper p {
   margin: 0;
+  color: #111;
+  font-size: 26px;
+  font-weight: 400;
+  letter-spacing: -0.4px;
+  line-height: 1.2;
 }
-
-.article-cards .article-card-description .button-container a.button {
-  all: unset;
+ 
+.insight-cards .featured-card .card-title-wrapper h1,
+.insight-cards .featured-card .card-title-wrapper h2,
+.insight-cards .featured-card .card-title-wrapper h3,
+.insight-cards .featured-card .card-title-wrapper h4,
+.insight-cards .featured-card .card-title-wrapper p {
+  font-size: 30px;
+  font-weight: 500;
+}
+ 
+.insight-cards .card-description {
+  margin: 0 0 24px;
+  color: #444;
+  font-size: 14px;
+  line-height: 1.5;
+}
+ 
+/* CTAs */
+.insight-cards .card-cta-wrapper {
+  margin-top: auto;
+  padding-bottom: 24px;
+}
+ 
+.insight-cards .card-cta {
   display: inline-flex;
   align-items: center;
-  gap: var(--spacing-xsmall);
-  color: var(--color-neutral-900);
-  font-weight: 700;
-  cursor: pointer;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
 }
-
-.article-cards .article-card-description .button-container a.button::after {
-  content: "→";
+ 
+.insight-cards .card-cta svg {
+  transition: transform 0.2s ease;
 }
-
-.article-cards .article-card-description .button-container a.button.primary,
-.article-cards .article-card-description .button-container a.button.secondary {
-  background: var(--color-neutral-900);
-  color: var(--color-neutral-50);
-  padding: 12px 20px;
-  border-radius: 0;
+ 
+.insight-cards .cta-link {
+  color: #111;
 }
-
-.article-cards .article-card-description .button-container a.button.primary:hover,
-.article-cards .article-card-description .button-container a.button.secondary:hover {
-  background: var(--color-neutral-800);
+ 
+.insight-cards .cta-button {
+  padding: 10px 18px;
+  border-radius: 2px;
+  background-color: #1a1a1a;
+  color: #fff;
 }
-
-.article-cards .article-card-author {
+ 
+/* Author Section */
+.insight-cards .card-author {
   display: flex;
   align-items: center;
-  gap: var(--spacing-xsmall);
-  margin-top: auto;
-  padding-top: var(--spacing-medium);
-  border-top: var(--shape-border-width-1) solid var(--color-neutral-300);
+  gap: 12px;
+  padding-top: 12px;
 }
-
-.article-cards .article-card-author-image {
-  flex: none;
-  line-height: 0;
-}
-
-.article-cards .article-card-author-image img {
-  width: 40px;
-  height: 40px;
+ 
+.insight-cards .author-avatar {
+  width: 36px;
+  height: 36px;
+  overflow: hidden;
   border-radius: 50%;
-  object-fit: cover;
+  flex-shrink: 0;
+}
+ 
+.insight-cards .author-avatar img,
+.insight-cards .author-avatar picture {
   display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
-
-.article-cards .article-card-author-info {
-  min-width: 0;
+ 
+.insight-cards .author-details {
+  display: flex;
+  flex-direction: column;
 }
-
-.article-cards .article-card-author-name {
-  margin: 0;
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: var(--color-neutral-900);
+ 
+.insight-cards .author-name {
+  color: #222;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.3;
 }
-
-.article-cards .article-card-author-role {
-  margin: 0;
-  font-size: 1.1rem;
-  letter-spacing: 0.04em;
+ 
+.insight-cards .author-title {
+  color: #666;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  line-height: 1.3;
   text-transform: uppercase;
-  color: var(--color-neutral-700);
 }
-
-@media (max-width: 991px) {
-  .article-cards > ul {
-    grid-template-columns: 1fr;
+ 
+/* Tablet View Overrides */
+@media (min-width: 601px) and (max-width: 1024px) {
+  .insight-cards-wrapper,
+  .insight-cards {
+    padding: 48px 24px;
   }
+ 
+  .insight-cards .insight-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
+  }
+ 
+  .insight-cards .featured-card {
+    grid-column: span 2;
+  }
+}
+ 
+/* Desktop View Overrides */
+@media (min-width: 1025px) {
+  .insight-cards-wrapper,
+  .insight-cards {
+    padding: 64px 40px;
+  }
+ 
+  .insight-cards .insight-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 36px;
+  }
+ 
+  .insight-cards .featured-card {
+    grid-column: span 1;
+  }
+}
+ 
+/* Hover Effects at Bottom to preserve specificity rules */
+.insight-cards .card-cta:hover svg {
+  transform: translateX(4px);
+}
+ 
+.insight-cards .cta-link:hover {
+  opacity: 0.7;
+}
+ 
+.insight-cards .cta-button:hover {
+  background-color: #333;
 }
