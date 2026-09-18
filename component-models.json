@@ -150,7 +150,7 @@
     ]
   },
   {
-    "id": "article-card",
+    "id": "insight-cards",
     "fields": [
       {
         "component": "reference",
@@ -198,7 +198,7 @@
       {
         "component": "text",
         "name": "content_cta",
-        "label": "CTA Text (e.g., Explore Outlook or Download Report)",
+        "label": "CTA Text (e.g., Explore Outlook)",
         "valueType": "string"
       },
       {
@@ -210,7 +210,7 @@
       {
         "component": "text",
         "name": "content_ctaStyle",
-        "label": "CTA Style (default or button)",
+        "label": "CTA Style (link or button)",
         "valueType": "string"
       },
       {
@@ -228,8 +228,8 @@
       },
       {
         "component": "text",
-        "name": "author_title",
-        "label": "Author Designation / Subtitle",
+        "name": "author_role",
+        "label": "Author Title / Designation",
         "valueType": "string"
       }
     ]
