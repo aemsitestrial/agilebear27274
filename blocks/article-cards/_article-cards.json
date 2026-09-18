@@ -1,15 +1,30 @@
 {
   "definitions": [
     {
-      "title": "Insight Cards",
-      "id": "insight-cards",
+      "title": "Article Cards",
+      "id": "article-cards",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
-              "name": "Insight Cards",
-              "model": "insight-cards"
+              "name": "Article Cards",
+              "filter": "article-cards"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Article Card",
+      "id": "article-card",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Article Card",
+              "model": "article-card"
             }
           }
         }
@@ -18,19 +33,7 @@
   ],
   "models": [
     {
-      "id": "insight-cards",
-      "fields": [
-        {
-          "component": "container-item",
-          "name": "cards",
-          "label": "Insight Cards",
-          "model": "insight-card-item",
-          "multi": true
-        }
-      ]
-    },
-    {
-      "id": "insight-card-item",
+      "id": "article-card",
       "fields": [
         {
           "component": "reference",
@@ -41,74 +44,74 @@
         },
         {
           "component": "text",
-          "name": "tagCategory",
+          "name": "meta_tagCategory",
           "label": "Badge Category (e.g., INDUSTRY OUTLOOK)",
           "valueType": "string"
         },
         {
           "component": "text",
-          "name": "tagSubcategory",
+          "name": "meta_tagSubcategory",
           "label": "Badge Subcategory (e.g., BANKING)",
           "valueType": "string"
         },
         {
           "component": "text",
-          "name": "readTime",
+          "name": "meta_readTime",
           "label": "Read Time (e.g., 14 MIN READ)",
           "valueType": "string"
         },
         {
           "component": "text",
-          "name": "publishDate",
+          "name": "meta_publishDate",
           "label": "Publish Date (e.g., Published July 2026)",
           "valueType": "string"
         },
         {
           "component": "richtext",
-          "name": "title",
+          "name": "content_title",
           "label": "Title",
           "valueType": "string"
         },
         {
           "component": "text",
-          "name": "description",
+          "name": "content_description",
           "label": "Description",
           "valueType": "string"
         },
         {
           "component": "text",
-          "name": "ctaText",
+          "name": "content_cta",
           "label": "CTA Text (e.g., Explore Outlook or Download Report)",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "name": "ctaLink",
+          "name": "content_ctaLink",
           "label": "CTA Link",
           "valueType": "string"
         },
         {
           "component": "text",
-          "name": "ctaStyle",
+          "name": "content_ctaStyle",
           "label": "CTA Style (default or button)",
           "valueType": "string"
         },
         {
           "component": "reference",
           "valueType": "string",
-          "name": "authorAvatar",
+          "name": "author_avatar",
           "label": "Author Avatar Image",
           "multi": false
         },
         {
           "component": "text",
-          "name": "authorName",
+          "name": "author_name",
           "label": "Author Name",
           "valueType": "string"
         },
         {
           "component": "text",
-          "name": "authorTitle",
+          "name": "author_title",
           "label": "Author Designation / Subtitle",
           "valueType": "string"
         }
@@ -117,9 +120,9 @@
   ],
   "filters": [
     {
-      "id": "insight-cards",
+      "id": "article-cards",
       "components": [
-        "insight-cards"
+        "article-card"
       ]
     }
   ]
