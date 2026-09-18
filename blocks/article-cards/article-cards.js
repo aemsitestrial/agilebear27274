@@ -1,233 +1,92 @@
-import { createOptimizedPicture } from '../../scripts/aem.js';
-import { moveInstrumentation } from '../../scripts/scripts.js';
-
-function textOf(div) {
-  return div ? div.textContent.trim() : '';
-}
-
-function buildTextEl(div, className, tag = 'span') {
-  if (!div || !textOf(div)) return null;
-
-  const el = document.createElement(tag);
-  el.className = className;
-  el.textContent = textOf(div);
-
-  moveInstrumentation(div, el);
-
-  return el;
-}
-
 export default function decorate(block) {
-  const ul = document.createElement('ul');
+  block.classList.add('insight-cards');
 
-  [...block.children].forEach((row, index) => {
-    const [
-      imageDiv,
-      tagDiv,
-      categoryDiv,
-      readingTimeDiv,
-      publishedDateDiv,
-      titleDiv,
-      descriptionDiv,
-      linkDiv,
-      linkTextDiv,
-      ctaStyleDiv,
-      authorImageDiv,
-      authorNameDiv,
-      authorRoleDiv,
-    ] = [...row.children];
+  const cardRows = [...block.children];
+  if (cardRows.length === 0) return;
 
-    const li = document.createElement('li');
+  const extractText = (el) => el?.querySelector('p, div, a')?.textContent?.trim() || el?.textContent?.trim() || '';
+  const extractHref = (el) => el?.querySelector('a')?.getAttribute('href') || extractText(el) || '#';
+  const extractRichText = (el) => {
+    if (!el) return '';
+    const innerContent = el.querySelector('p, h1, h2, h3, h4, div');
+    return innerContent ? innerContent.outerHTML : el.innerHTML;
+  };
 
-    // Optional featured card
-    if (index === 1) {
-      li.classList.add('article-card-featured');
-    }
+  const renderImg = (container, alt) => {
+    if (!container) return '';
+    const imgOrPicture = container.querySelector('picture, img');
+    if (imgOrPicture) return imgOrPicture.outerHTML;
+    const url = extractText(container);
+    if (!url) return '';
+    if (url.includes('<img')) return url;
+    return `<img src="${url}" alt="${alt}" loading="lazy" />`;
+  };
 
-    moveInstrumentation(row, li);
+  const cardsHtml = cardRows.map((row) => {
+    const fields = [...row.children].map((child) => child.firstElementChild || child);
+    if (fields.length < 13) return '';
 
-    /* IMAGE */
+    const imageHtml = renderImg(fields[0], 'Card Hero');
+    const tagCategory = extractText(fields[1]);
+    const tagSubcategory = extractText(fields[2]);
+    const readTime = extractText(fields[3]);
+    const publishDate = extractText(fields[4]);
+    const titleHtml = extractRichText(fields[5]);
+    const descriptionText = extractText(fields[6]);
+    const ctaText = extractText(fields[7]);
+    const ctaLink = extractHref(fields[8]);
+    const ctaStyle = extractText(fields[9]).toLowerCase(); // 'button' or 'link'
+    const authorAvatarHtml = renderImg(fields[10], 'Author Avatar');
+    const authorName = extractText(fields[11]);
+    const authorTitle = extractText(fields[12]);
 
-    if (imageDiv) {
-      const imageWrapper = document.createElement('div');
-      imageWrapper.className = 'article-card-image';
+    const isFeatured = !imageHtml && tagCategory;
 
-      moveInstrumentation(imageDiv, imageWrapper);
+    return `
+<article class="insight-card ${isFeatured ? 'featured-card' : ''}">
+        ${imageHtml ? `<div class="card-image-wrapper">${imageHtml}</div>` : ''}
+<div class="card-body">
+<div class="card-meta-top">
+<div class="card-badges">
+              ${tagCategory ? `<span class="badge badge-category">${tagCategory}</span>` : ''}
+              ${tagSubcategory ? `<span class="badge badge-subcategory">${tagSubcategory}</span>` : ''}
+</div>
+            ${readTime ? `<span class="card-read-time">${readTime}</span>` : ''}
+</div>
+ 
+          ${publishDate ? `<p class="card-publish-date">${publishDate}</p>` : ''}
+          ${titleHtml ? `<div class="card-title-wrapper">${titleHtml}</div>` : ''}
+          ${descriptionText ? `<p class="card-description">${descriptionText}</p>` : ''}
+ 
+          ${ctaText ? `
+<div class="card-cta-wrapper">
+<a href="${ctaLink}" class="card-cta ${ctaStyle === 'button' ? 'cta-button' : 'cta-link'}">
+<span>${ctaText}</span>
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+<line x1="5" y1="12" x2="19" y2="12"></line>
+<polyline points="12 5 19 12 12 19"></polyline>
+</svg>
+</a>
+</div>
+          ` : ''}
+ 
+          ${(authorName || authorAvatarHtml) ? `
+<div class="card-author">
+              ${authorAvatarHtml ? `<div class="author-avatar">${authorAvatarHtml}</div>` : ''}
+<div class="author-details">
+                ${authorName ? `<span class="author-name">${authorName}</span>` : ''}
+                ${authorTitle ? `<span class="author-title">${authorTitle}</span>` : ''}
+</div>
+</div>
+          ` : ''}
+</div>
+</article>
+    `;
+  }).join('');
 
-      while (imageDiv.firstElementChild) {
-        imageWrapper.append(imageDiv.firstElementChild);
-      }
-
-      li.append(imageWrapper);
-    }
-
-    /* BODY */
-
-    const body = document.createElement('div');
-    body.className = 'article-card-body';
-
-    /* META */
-
-    const meta = document.createElement('div');
-    meta.className = 'article-card-meta';
-
-    [
-      buildTextEl(tagDiv, 'article-card-tag'),
-      buildTextEl(categoryDiv, 'article-card-category'),
-      buildTextEl(readingTimeDiv, 'article-card-reading-time'),
-    ]
-      .filter(Boolean)
-      .forEach((el) => meta.append(el));
-
-    if (meta.children.length) {
-      body.append(meta);
-    }
-
-    /* DATE */
-
-    const published = buildTextEl(
-      publishedDateDiv,
-      'article-card-published',
-      'p',
-    );
-
-    if (published) body.append(published);
-
-    /* TITLE */
-
-    const title = buildTextEl(
-      titleDiv,
-      'article-card-title',
-      'h2',
-    );
-
-    if (title) body.append(title);
-
-    /* DESCRIPTION */
-
-    if (descriptionDiv) {
-      const description = document.createElement('div');
-      description.className = 'article-card-description';
-
-      moveInstrumentation(descriptionDiv, description);
-
-      while (descriptionDiv.firstElementChild) {
-        description.append(descriptionDiv.firstElementChild);
-      }
-
-      body.append(description);
-    }
-
-    /* CTA */
-
-    const linkAnchor = linkDiv?.querySelector('a');
-    const linkHref = linkAnchor?.href;
-    const linkLabel = textOf(linkTextDiv);
-
-    if (linkHref && linkLabel) {
-      const ctaWrapper = document.createElement('div');
-      ctaWrapper.className = 'article-card-cta';
-
-      const cta = document.createElement('a');
-
-      const isButton = textOf(ctaStyleDiv).toLowerCase() === 'button';
-
-      cta.className = isButton
-        ? 'button primary'
-        : 'article-card-link';
-
-      cta.href = linkHref;
-      cta.textContent = linkLabel;
-
-      ctaWrapper.append(cta);
-      body.append(ctaWrapper);
-    }
-
-    /* AUTHOR */
-
-    const author = document.createElement('div');
-    author.className = 'article-card-author';
-
-    if (authorImageDiv) {
-      const authorImage = document.createElement('div');
-      authorImage.className = 'article-card-author-image';
-
-      moveInstrumentation(authorImageDiv, authorImage);
-
-      while (authorImageDiv.firstElementChild) {
-        authorImage.append(authorImageDiv.firstElementChild);
-      }
-
-      author.append(authorImage);
-    }
-
-    const authorInfo = document.createElement('div');
-    authorInfo.className = 'article-card-author-info';
-
-    const authorName = buildTextEl(
-      authorNameDiv,
-      'article-card-author-name',
-      'p',
-    );
-
-    const authorRole = buildTextEl(
-      authorRoleDiv,
-      'article-card-author-role',
-      'p',
-    );
-
-    if (authorName) authorInfo.append(authorName);
-    if (authorRole) authorInfo.append(authorRole);
-
-    if (authorInfo.children.length) {
-      author.append(authorInfo);
-    }
-
-    if (author.children.length) {
-      body.append(author);
-    }
-
-    li.append(body);
-    ul.append(li);
-  });
-
-  ul.querySelectorAll('.article-card-image picture > img')
-    .forEach((img) => {
-      const optimizedPicture = createOptimizedPicture(
-        img.src,
-        img.alt,
-        false,
-        [{ width: '1200' }],
-      );
-
-      moveInstrumentation(
-        img,
-        optimizedPicture.querySelector('img'),
-      );
-
-      img.closest('picture').replaceWith(
-        optimizedPicture,
-      );
-    });
-
-  ul.querySelectorAll('.article-card-author-image picture > img')
-    .forEach((img) => {
-      const optimizedPicture = createOptimizedPicture(
-        img.src,
-        img.alt,
-        false,
-        [{ width: '96' }],
-      );
-
-      moveInstrumentation(
-        img,
-        optimizedPicture.querySelector('img'),
-      );
-
-      img.closest('picture').replaceWith(
-        optimizedPicture,
-      );
-    });
-
-  block.replaceChildren(ul);
+  block.innerHTML = `
+<div class="insight-cards-grid">
+      ${cardsHtml}
+</div>
+  `;
 }
