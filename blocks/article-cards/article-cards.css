@@ -8,26 +8,33 @@
   padding: 0;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  align-items: stretch;
+  gap: 24px;
 }
 
 .article-cards > ul > li {
   background: #f5f5f5;
-  border: none;
   display: flex;
   flex-direction: column;
   height: 100%;
+}
+
+/* Featured Center Card */
+.article-cards > ul > li.article-card-featured {
+  background: #f5f5f5;
 }
 
 .article-cards .article-card-image {
   line-height: 0;
 }
 
+.article-cards .article-card-image picture,
 .article-cards .article-card-image img {
-  width: 100%;
-  aspect-ratio: 16 / 9;
   display: block;
+  width: 100%;
+}
+
+.article-cards .article-card-image img {
+  aspect-ratio: 16 / 9;
   object-fit: cover;
 }
 
@@ -35,92 +42,109 @@
   display: flex;
   flex-direction: column;
   flex: 1;
-  padding: 18px;
+  padding: 16px;
 }
 
 .article-cards .article-card-meta {
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
   gap: 10px;
+  flex-wrap: wrap;
   margin-bottom: 12px;
 }
 
 .article-cards .article-card-tag {
   background: #d8e4f3;
-  color: #3a3a3a;
+  color: #495057;
+  padding: 4px 8px;
   font-size: 10px;
   font-weight: 600;
-  padding: 4px 8px;
+  line-height: 1;
   text-transform: uppercase;
-  letter-spacing: 0;
 }
 
 .article-cards .article-card-category {
   font-size: 10px;
-  font-weight: 500;
-  color: #666;
   text-transform: uppercase;
+  color: #666;
 }
 
 .article-cards .article-card-reading-time {
   margin-left: auto;
   font-size: 10px;
-  color: #666;
   text-transform: uppercase;
-  white-space: nowrap;
+  color: #666;
 }
 
 .article-cards .article-card-published {
   margin: 0 0 12px;
-  color: #555;
   font-size: 14px;
+  color: #555;
 }
 
 .article-cards .article-card-title {
   margin: 0 0 16px;
-  color: #222;
-  font-size: 3rem;
+  font-size: 2.8rem;
   line-height: 1.15;
   font-weight: 400;
+  color: #222;
 }
 
 .article-cards .article-card-description {
-  color: #333;
   font-size: 1.5rem;
   line-height: 1.7;
+  color: #333;
 }
 
 .article-cards .article-card-description p {
-  margin: 0 0 20px;
+  margin: 0 0 16px;
 }
 
-.article-cards .article-card-description .button-container {
-  margin-top: 20px;
+/* CTA Section */
+
+.article-cards .article-card-cta {
+  margin-top: 16px;
+  margin-bottom: 20px;
 }
 
-.article-cards .article-card-description .button-container a.button.primary,
-.article-cards .article-card-description .button-container a.button.secondary {
+.article-cards .article-card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #222;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.article-cards .article-card-link::after {
+  content: "→";
+}
+
+.article-cards .article-card-cta .button.primary,
+.article-cards .article-card-cta .button.secondary {
   display: inline-flex;
   align-items: center;
   gap: 8px;
   background: #222;
   color: #fff;
-  padding: 12px 16px;
+  padding: 12px 18px;
+  text-decoration: none;
   font-size: 14px;
   font-weight: 500;
-  border-radius: 0;
 }
 
-.article-cards .article-card-description .button-container a.button.primary::after,
-.article-cards .article-card-description .button-container a.button.secondary::after {
+.article-cards .article-card-cta .button.primary::after,
+.article-cards .article-card-cta .button.secondary::after {
   content: "→";
 }
 
-.article-cards .article-card-description .button-container a.button.primary:hover,
-.article-cards .article-card-description .button-container a.button.secondary:hover {
+.article-cards .article-card-cta .button.primary:hover,
+.article-cards .article-card-cta .button.secondary:hover {
   background: #000;
 }
+
+/* Author */
 
 .article-cards .article-card-author {
   display: flex;
@@ -128,7 +152,10 @@
   gap: 10px;
   margin-top: auto;
   padding-top: 20px;
-  border-top: none;
+}
+
+.article-cards .article-card-author-image {
+  flex-shrink: 0;
 }
 
 .article-cards .article-card-author-image img {
@@ -138,30 +165,36 @@
   object-fit: cover;
 }
 
+.article-cards .article-card-author-info {
+  min-width: 0;
+}
+
 .article-cards .article-card-author-name {
   margin: 0;
   font-size: 13px;
-  font-weight: 500;
+  line-height: 1.2;
   color: #444;
 }
 
 .article-cards .article-card-author-role {
   margin: 0;
   font-size: 10px;
+  line-height: 1.2;
   color: #666;
   text-transform: uppercase;
-  line-height: 1.2;
 }
 
-/* Center feature card */
+/* Featured Card Styling */
 
-.article-cards > ul > li:nth-child(2) .article-card-title {
-  font-size: 4.8rem;
+.article-cards .article-card-featured .article-card-title {
+  font-size: 4.6rem;
   line-height: 1.05;
+  margin-bottom: 20px;
 }
 
-.article-cards > ul > li:nth-child(2) .article-card-description {
+.article-cards .article-card-featured .article-card-description {
   font-size: 1.7rem;
+  line-height: 1.65;
 }
 
 /* Mobile */
@@ -172,10 +205,10 @@
   }
 
   .article-cards .article-card-title {
-    font-size: 2.6rem;
+    font-size: 2.4rem;
   }
 
-  .article-cards > ul > li:nth-child(2) .article-card-title {
+  .article-cards .article-card-featured .article-card-title {
     font-size: 3.2rem;
   }
 }
