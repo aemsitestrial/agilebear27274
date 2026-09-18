@@ -150,87 +150,79 @@
     ]
   },
   {
-    "id": "insight-cards",
+    "id": "article-card",
     "fields": [
       {
         "component": "reference",
         "valueType": "string",
         "name": "image",
-        "label": "Card Image",
+        "label": "Image",
         "multi": false
       },
       {
         "component": "text",
-        "name": "meta_tagCategory",
-        "label": "Badge Category (e.g., INDUSTRY OUTLOOK)",
-        "valueType": "string"
+        "name": "meta_tag",
+        "label": "Tag"
       },
       {
         "component": "text",
-        "name": "meta_tagSubcategory",
-        "label": "Badge Subcategory (e.g., BANKING)",
-        "valueType": "string"
+        "name": "meta_category",
+        "label": "Category"
       },
       {
         "component": "text",
-        "name": "meta_readTime",
-        "label": "Read Time (e.g., 14 MIN READ)",
-        "valueType": "string"
+        "name": "meta_readingTime",
+        "label": "Reading Time"
       },
       {
         "component": "text",
-        "name": "meta_publishDate",
-        "label": "Publish Date (e.g., Published July 2026)",
-        "valueType": "string"
+        "name": "meta_publishedDate",
+        "label": "Published Date"
+      },
+      {
+        "component": "text",
+        "name": "content_title",
+        "label": "Title"
       },
       {
         "component": "richtext",
-        "name": "content_title",
-        "label": "Title",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
         "name": "content_description",
+        "value": "",
         "label": "Description",
         "valueType": "string"
       },
       {
-        "component": "text",
-        "name": "content_cta",
-        "label": "CTA Text (e.g., Explore Outlook)",
-        "valueType": "string"
+        "component": "aem-content",
+        "name": "content_link",
+        "label": "Link"
       },
       {
-        "component": "aem-content",
-        "name": "content_ctaLink",
-        "label": "CTA Link",
-        "valueType": "string"
+        "component": "text",
+        "name": "content_linkText",
+        "label": "Link Text"
       },
       {
         "component": "text",
         "name": "content_ctaStyle",
-        "label": "CTA Style (link or button)",
-        "valueType": "string"
+        "label": "CTA Style",
+        "description": "Leave empty for an arrow link, or type \"button\" for a solid button"
       },
       {
         "component": "reference",
         "valueType": "string",
-        "name": "author_avatar",
-        "label": "Author Avatar Image",
+        "name": "author_image",
+        "label": "Author Image",
         "multi": false
       },
       {
         "component": "text",
         "name": "author_name",
-        "label": "Author Name",
-        "valueType": "string"
+        "label": "Author Name"
       },
       {
         "component": "text",
         "name": "author_role",
-        "label": "Author Title / Designation",
-        "valueType": "string"
+        "label": "Author Role"
       }
     ]
   },
