@@ -1,7 +1,6 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
-import { moveInstrumentation } from '../../scripts/scripts.js';
 
-function getText(cell) {
+function text(cell) {
   return cell ? cell.textContent.trim() : '';
 }
 
@@ -33,49 +32,61 @@ export default function decorate(block) {
       authorRole,
     ] = cells;
 
-    moveInstrumentation(row, li);
-
-    /* Image */
+    /* IMAGE */
 
     const imageWrapper = document.createElement('div');
     imageWrapper.className = 'article-card-image';
 
-    if (image) {
-      const picture = image.querySelector('picture');
-      if (picture) {
-        imageWrapper.append(picture.cloneNode(true));
-      }
+    const picture = image?.querySelector('picture');
+
+    if (picture) {
+      imageWrapper.append(
+        createOptimizedPicture(
+          picture.querySelector('img').src,
+          picture.querySelector('img').alt,
+          false,
+          [{ width: '1200' }],
+        ),
+      );
     }
 
-    /* Body */
+    /* BODY */
 
     const body = document.createElement('div');
     body.className = 'article-card-body';
 
-    /* Meta */
+    /* META */
 
     const meta = document.createElement('div');
     meta.className = 'article-card-meta';
 
-    meta.innerHTML = `
-      <span class="article-card-tag">${getText(tag)}</span>
-      <span class="article-card-category">${getText(category)}</span>
-      <span class="article-card-reading-time">${getText(readingTime)}</span>
-    `;
+    const tagEl = document.createElement('span');
+    tagEl.className = 'article-card-tag';
+    tagEl.textContent = text(tag);
 
-    /* Published */
+    const catEl = document.createElement('span');
+    catEl.className = 'article-card-category';
+    catEl.textContent = text(category);
 
-    const published = document.createElement('p');
-    published.className = 'article-card-published';
-    published.textContent = `Published ${getText(publishedDate)}`;
+    const readEl = document.createElement('span');
+    readEl.className = 'article-card-reading-time';
+    readEl.textContent = text(readingTime);
 
-    /* Title */
+    meta.append(tagEl, catEl, readEl);
+
+    /* DATE */
+
+    const date = document.createElement('p');
+    date.className = 'article-card-published';
+    date.textContent = `Published ${text(publishedDate)}`;
+
+    /* TITLE */
 
     const heading = document.createElement('h2');
     heading.className = 'article-card-title';
-    heading.textContent = getText(title);
+    heading.textContent = text(title);
 
-    /* Description */
+    /* DESCRIPTION */
 
     const desc = document.createElement('div');
     desc.className = 'article-card-description';
@@ -86,56 +97,67 @@ export default function decorate(block) {
 
     /* CTA */
 
-    const url = getText(link);
-    const label = getText(linkText);
+    const ctaWrapper = document.createElement('div');
+    ctaWrapper.className = 'article-card-cta';
 
-    if (url && label) {
-      const ctaContainer = document.createElement('div');
-      ctaContainer.className = 'article-card-cta';
+    const href = text(link);
+    const label = text(linkText);
 
+    if (href && label) {
       const cta = document.createElement('a');
-      cta.href = url;
 
-      if (getText(ctaStyle).toLowerCase() === 'button') {
+      cta.href = href;
+      cta.textContent = label;
+
+      if (text(ctaStyle).toLowerCase() === 'button') {
         cta.className = 'button primary';
       } else {
         cta.className = 'article-card-link';
       }
 
-      cta.textContent = label;
-
-      ctaContainer.append(cta);
-      desc.append(ctaContainer);
+      ctaWrapper.append(cta);
+      desc.append(ctaWrapper);
     }
 
-    /* Author */
+    /* AUTHOR */
 
     const author = document.createElement('div');
     author.className = 'article-card-author';
 
-    const authorPic = document.createElement('div');
-    authorPic.className = 'article-card-author-image';
+    const authorImg = document.createElement('div');
+    authorImg.className = 'article-card-author-image';
 
-    if (authorImage) {
-      const picture = authorImage.querySelector('picture');
-      if (picture) {
-        authorPic.append(picture.cloneNode(true));
-      }
+    const authorPicture = authorImage?.querySelector('picture');
+
+    if (authorPicture) {
+      authorImg.append(
+        createOptimizedPicture(
+          authorPicture.querySelector('img').src,
+          authorPicture.querySelector('img').alt,
+          false,
+          [{ width: '96' }],
+        ),
+      );
     }
 
-    const authorInfo = document.createElement('div');
-    authorInfo.className = 'article-card-author-info';
+    const info = document.createElement('div');
+    info.className = 'article-card-author-info';
 
-    authorInfo.innerHTML = `
-      <p class="article-card-author-name">${getText(authorName)}</p>
-      <p class="article-card-author-role">${getText(authorRole)}</p>
-    `;
+    const authorNameEl = document.createElement('p');
+    authorNameEl.className = 'article-card-author-name';
+    authorNameEl.textContent = text(authorName);
 
-    author.append(authorPic, authorInfo);
+    const authorRoleEl = document.createElement('p');
+    authorRoleEl.className = 'article-card-author-role';
+    authorRoleEl.textContent = text(authorRole);
+
+    info.append(authorNameEl, authorRoleEl);
+
+    author.append(authorImg, info);
 
     body.append(
       meta,
-      published,
+      date,
       heading,
       desc,
       author,
@@ -147,28 +169,6 @@ export default function decorate(block) {
     );
 
     ul.append(li);
-  });
-
-  ul.querySelectorAll('.article-card-image img').forEach((img) => {
-    const pic = createOptimizedPicture(
-      img.src,
-      img.alt,
-      false,
-      [{ width: '1200' }],
-    );
-
-    img.closest('picture').replaceWith(pic);
-  });
-
-  ul.querySelectorAll('.article-card-author-image img').forEach((img) => {
-    const pic = createOptimizedPicture(
-      img.src,
-      img.alt,
-      false,
-      [{ width: '96' }],
-    );
-
-    img.closest('picture').replaceWith(pic);
   });
 
   block.replaceChildren(ul);
