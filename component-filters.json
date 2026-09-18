@@ -387,9 +387,9 @@
     ]
   },
   {
-    "id": "article-cards",
+    "id": "insight-cards",
     "components": [
-      "article-card"
+      "insight-cards"
     ]
   },
   {
