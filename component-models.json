@@ -150,81 +150,51 @@
     ]
   },
   {
-    "id": "article-card",
+  "id": "article-card",
+  "fields": [
+    {
+      "component": "reference",
+      "valueType": "string",
+      "name": "image",
+      "label": "Image",
+      "multi": false
+    },
+    {
+      "component": "text",
+      "valueType": "string",
+      "name": "tag",
+      "label": "Tag"
+    },
+    {
+      "component": "richtext",
+      "valueType": "string",
+      "name": "content",
+      "label": "Content"
+    },
+    {
+      "component": "aem-content",
+      "valueType": "string",
+      "name": "link",
+      "label": "CTA Link"
+    }
+  ]
+},
+  {
+    "id": "card",
     "fields": [
       {
         "component": "reference",
         "valueType": "string",
         "name": "image",
-        "label": "Image (leave empty for featured card)",
+        "label": "Image",
         "multi": false
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "imageAlt",
-        "label": "Image Alt Text"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "tag",
-        "label": "Content Type (e.g. Report)"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "category",
-        "label": "Category (e.g. Banking)"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "readTime",
-        "label": "Read Time (e.g. 14 min read)"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "published",
-        "label": "Published Text (e.g. Published Dec 2025)"
       },
       {
         "component": "richtext",
-        "valueType": "string",
         "name": "text",
-        "label": "Title and Description"
-      },
-      {
-        "component": "aem-content",
-        "valueType": "string",
-        "name": "link",
-        "label": "CTA Link"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "linkText",
-        "label": "CTA Text"
-      },
-      {
-        "component": "reference",
-        "valueType": "string",
-        "name": "authorImage",
-        "label": "Author Photo",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "authorName",
-        "label": "Author Name"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "authorRole",
-        "label": "Author Role"
+        "value": "",
+        "label": "Text",
+        "valueType": "string"
       }
     ]
   },
