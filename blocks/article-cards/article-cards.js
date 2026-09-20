@@ -213,10 +213,9 @@ function buildCTA(fields, isFeatured) {
     link.rel = authoredLink.rel;
   }
 
-  link.textContent =
-    ctaText ||
-    getText(authoredLink) ||
-    'Read more';
+  link.textContent = ctaText
+    || getText(authoredLink)
+    || 'Read more';
 
   if (isFeatured) {
     link.classList.add(
@@ -235,9 +234,9 @@ function buildAuthor(fields) {
   );
 
   if (
-    !authorName &&
-    !authorRole &&
-    !authorImage
+    !authorName
+    && !authorRole
+    && !authorImage
   ) {
     return null;
   }
@@ -434,16 +433,14 @@ function optimizeMainImages(block) {
         return;
       }
 
-      const optimizedPicture =
-        createOptimizedPicture(
-          img.src,
-          img.alt || '',
-          false,
-          [{ width: '750' }],
-        );
+      const optimizedPicture = createOptimizedPicture(
+        img.src,
+        img.alt || '',
+        false,
+        [{ width: '750' }],
+      );
 
-      const optimizedImage =
-        optimizedPicture.querySelector('img');
+      const optimizedImage = optimizedPicture.querySelector('img');
 
       if (optimizedImage) {
         moveInstrumentation(
@@ -470,16 +467,14 @@ function optimizeAuthorImages(block) {
         return;
       }
 
-      const optimizedPicture =
-        createOptimizedPicture(
-          img.src,
-          img.alt || '',
-          false,
-          [{ width: '96' }],
-        );
+      const optimizedPicture = createOptimizedPicture(
+        img.src,
+        img.alt || '',
+        false,
+        [{ width: '96' }],
+      );
 
-      const optimizedImage =
-        optimizedPicture.querySelector('img');
+      const optimizedImage = optimizedPicture.querySelector('img');
 
       if (optimizedImage) {
         moveInstrumentation(
