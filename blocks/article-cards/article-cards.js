@@ -1,174 +1,78 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
 
-function text(cell) {
-  return cell ? cell.textContent.trim() : '';
+/*
+ * Cell order MUST match the field order in _article-cards.json.
+ * image + imageAlt collapse into one cell, link + linkText collapse into one cell.
+ */
+const FIELDS = [
+  'image',
+  'tag',
+  'category',
+  'readTime',
+  'published',
+  'text',
+  'link',
+  'avatar',
+  'authorName',
+  'authorRole',
+];
+
+function isEmpty(cell) {
+  return !cell || (!cell.textContent.trim() && !cell.querySelector('picture, img, a'));
+}
+
+function wrap(className, ...children) {
+  const el = document.createElement('div');
+  el.className = className;
+  children.filter((child) => !isEmpty(child)).forEach((child) => el.append(child));
+  return el;
 }
 
 export default function decorate(block) {
   const ul = document.createElement('ul');
 
-  [...block.children].forEach((row, index) => {
-    const cells = [...row.children];
+  [...block.children].forEach((row) => {
+    const cells = {};
+    FIELDS.forEach((name, i) => {
+      const cell = row.children[i];
+      if (cell) cell.className = `article-cards-${name}`;
+      cells[name] = cell;
+    });
 
     const li = document.createElement('li');
+    moveInstrumentation(row, li);
 
-    if (index === 1) {
-      li.classList.add('article-card-featured');
+    // No image authored = featured (grey, text-only) card with a button CTA
+    const hasImage = !isEmpty(cells.image) && cells.image.querySelector('picture, img');
+    if (!hasImage) li.classList.add('is-featured');
+
+    // Normalise the CTA: drop the global button styling, use block styles instead
+    const cta = cells.link?.querySelector('a');
+    if (cta) {
+      cta.className = 'article-cards-cta';
+      cta.parentElement?.classList.remove('button-container');
     }
 
-    const [
-      image,
-      tag,
-      category,
-      readingTime,
-      publishedDate,
-      title,
-      description,
-      link,
-      linkText,
-      ctaStyle,
-      authorImage,
-      authorName,
-      authorRole,
-    ] = cells;
+    const meta = wrap('article-cards-meta', cells.tag, cells.category, cells.readTime);
+    const body = wrap('article-cards-content', meta, cells.published, cells.text, cells.link);
+    const info = wrap('article-cards-author-info', cells.authorName, cells.authorRole);
+    const author = wrap('article-cards-author', cells.avatar, info);
 
-    /* IMAGE */
-
-    const imageWrapper = document.createElement('div');
-    imageWrapper.className = 'article-card-image';
-
-    const picture = image?.querySelector('picture');
-
-    if (picture) {
-      imageWrapper.append(
-        createOptimizedPicture(
-          picture.querySelector('img').src,
-          picture.querySelector('img').alt,
-          false,
-          [{ width: '1200' }],
-        ),
-      );
-    }
-
-    /* BODY */
-
-    const body = document.createElement('div');
-    body.className = 'article-card-body';
-
-    /* META */
-
-    const meta = document.createElement('div');
-    meta.className = 'article-card-meta';
-
-    const tagEl = document.createElement('span');
-    tagEl.className = 'article-card-tag';
-    tagEl.textContent = text(tag);
-
-    const catEl = document.createElement('span');
-    catEl.className = 'article-card-category';
-    catEl.textContent = text(category);
-
-    const readEl = document.createElement('span');
-    readEl.className = 'article-card-reading-time';
-    readEl.textContent = text(readingTime);
-
-    meta.append(tagEl, catEl, readEl);
-
-    /* DATE */
-
-    const date = document.createElement('p');
-    date.className = 'article-card-published';
-    date.textContent = `Published ${text(publishedDate)}`;
-
-    /* TITLE */
-
-    const heading = document.createElement('h2');
-    heading.className = 'article-card-title';
-    heading.textContent = text(title);
-
-    /* DESCRIPTION */
-
-    const desc = document.createElement('div');
-    desc.className = 'article-card-description';
-
-    if (description) {
-      desc.innerHTML = description.innerHTML;
-    }
-
-    /* CTA */
-
-    const ctaWrapper = document.createElement('div');
-    ctaWrapper.className = 'article-card-cta';
-
-    const href = text(link);
-    const label = text(linkText);
-
-    if (href && label) {
-      const cta = document.createElement('a');
-
-      cta.href = href;
-      cta.textContent = label;
-
-      if (text(ctaStyle).toLowerCase() === 'button') {
-        cta.className = 'button primary';
-      } else {
-        cta.className = 'article-card-link';
-      }
-
-      ctaWrapper.append(cta);
-      desc.append(ctaWrapper);
-    }
-
-    /* AUTHOR */
-
-    const author = document.createElement('div');
-    author.className = 'article-card-author';
-
-    const authorImg = document.createElement('div');
-    authorImg.className = 'article-card-author-image';
-
-    const authorPicture = authorImage?.querySelector('picture');
-
-    if (authorPicture) {
-      authorImg.append(
-        createOptimizedPicture(
-          authorPicture.querySelector('img').src,
-          authorPicture.querySelector('img').alt,
-          false,
-          [{ width: '96' }],
-        ),
-      );
-    }
-
-    const info = document.createElement('div');
-    info.className = 'article-card-author-info';
-
-    const authorNameEl = document.createElement('p');
-    authorNameEl.className = 'article-card-author-name';
-    authorNameEl.textContent = text(authorName);
-
-    const authorRoleEl = document.createElement('p');
-    authorRoleEl.className = 'article-card-author-role';
-    authorRoleEl.textContent = text(authorRole);
-
-    info.append(authorNameEl, authorRoleEl);
-
-    author.append(authorImg, info);
-
-    body.append(
-      meta,
-      date,
-      heading,
-      desc,
-      author,
-    );
-
-    li.append(
-      imageWrapper,
-      body,
-    );
+    if (hasImage) li.append(cells.image);
+    li.append(body);
+    if (author.children.length) li.append(author);
 
     ul.append(li);
+  });
+
+  // Optimise images, keeping Universal Editor instrumentation on the new <img>
+  ul.querySelectorAll('picture > img').forEach((img) => {
+    const isAvatar = img.closest('.article-cards-avatar');
+    const width = isAvatar ? '96' : '750';
+    const pic = createOptimizedPicture(img.src, isAvatar ? '' : img.alt, false, [{ width }]);
+    moveInstrumentation(img, pic.querySelector('img'));
+    img.closest('picture').replaceWith(pic);
   });
 
   block.replaceChildren(ul);

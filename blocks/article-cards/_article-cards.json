@@ -39,72 +39,74 @@
           "component": "reference",
           "valueType": "string",
           "name": "image",
-          "label": "Image",
+          "label": "Image (leave empty for featured card)",
           "multi": false
         },
         {
           "component": "text",
-          "name": "meta_tag",
-          "label": "Tag"
+          "valueType": "string",
+          "name": "imageAlt",
+          "label": "Image Alt Text"
         },
         {
           "component": "text",
-          "name": "meta_category",
-          "label": "Category"
+          "valueType": "string",
+          "name": "tag",
+          "label": "Content Type (e.g. Report)"
         },
         {
           "component": "text",
-          "name": "meta_readingTime",
-          "label": "Reading Time"
+          "valueType": "string",
+          "name": "category",
+          "label": "Category (e.g. Banking)"
         },
         {
           "component": "text",
-          "name": "meta_publishedDate",
-          "label": "Published Date"
+          "valueType": "string",
+          "name": "readTime",
+          "label": "Read Time (e.g. 14 min read)"
         },
         {
           "component": "text",
-          "name": "content_title",
-          "label": "Title"
+          "valueType": "string",
+          "name": "published",
+          "label": "Published Text (e.g. Published Dec 2025)"
         },
         {
           "component": "richtext",
-          "name": "content_description",
-          "value": "",
-          "label": "Description",
-          "valueType": "string"
+          "valueType": "string",
+          "name": "text",
+          "label": "Title and Description"
         },
         {
           "component": "aem-content",
-          "name": "content_link",
-          "label": "Link"
+          "valueType": "string",
+          "name": "link",
+          "label": "CTA Link"
         },
         {
           "component": "text",
-          "name": "content_linkText",
-          "label": "Link Text"
-        },
-        {
-          "component": "text",
-          "name": "content_ctaStyle",
-          "label": "CTA Style",
-          "description": "Leave empty for an arrow link, or type \"button\" for a solid button"
+          "valueType": "string",
+          "name": "linkText",
+          "label": "CTA Text"
         },
         {
           "component": "reference",
           "valueType": "string",
-          "name": "author_image",
-          "label": "Author Image",
+          "name": "authorImage",
+          "label": "Author Photo",
           "multi": false
         },
         {
           "component": "text",
-          "name": "author_name",
+          "valueType": "string",
+          "name": "authorName",
           "label": "Author Name"
         },
         {
           "component": "text",
-          "name": "author_role",
+          "valueType": "string",
+          "name": "authorRole",
           "label": "Author Role"
         }
       ]
@@ -113,9 +115,7 @@
   "filters": [
     {
       "id": "article-cards",
-      "components": [
-        "article-card"
-      ]
+      "components": ["article-card"]
     }
   ]
 }
