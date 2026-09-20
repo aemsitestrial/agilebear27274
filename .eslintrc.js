@@ -30,6 +30,10 @@ module.exports = {
     ],
     'no-unused-vars': ['error', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
     'no-underscore-dangle': 'off', // allow all underscore properties
+    'xwalk/max-cells': ['error', {
+      '*': 4,
+      'article-cards': 14,
+    }],
   },
   overrides: [
     {
