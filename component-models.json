@@ -150,95 +150,108 @@
     ]
   },
   {
-    "id": "article-cards",
+    "id": "article-card",
     "fields": [
       {
-        "component": "container",
-        "name": "items",
-        "label": "Article Cards",
-        "multi": true,
-        "fields": [
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Image (leave empty for featured card)",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "label": "Image Alt Text"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "meta_tag",
+        "label": "Tag"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "meta_category",
+        "label": "Category"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "meta_readTime",
+        "label": "Read Time"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "meta_published",
+        "label": "Published Text"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "content_title",
+        "label": "Title"
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "content_titleType",
+        "label": "Title Level",
+        "value": "h3",
+        "options": [
           {
-            "component": "reference",
-            "valueType": "string",
-            "name": "image",
-            "label": "Image (leave empty for featured card)",
-            "multi": false
+            "name": "H2",
+            "value": "h2"
           },
           {
-            "component": "text",
-            "valueType": "string",
-            "name": "imageAlt",
-            "label": "Image Alt Text"
+            "name": "H3",
+            "value": "h3"
           },
           {
-            "component": "text",
-            "valueType": "string",
-            "name": "tag",
-            "label": "Tag"
-          },
-          {
-            "component": "text",
-            "valueType": "string",
-            "name": "category",
-            "label": "Category"
-          },
-          {
-            "component": "text",
-            "valueType": "string",
-            "name": "readTime",
-            "label": "Read Time"
-          },
-          {
-            "component": "text",
-            "valueType": "string",
-            "name": "published",
-            "label": "Published Text"
-          },
-          {
-            "component": "text",
-            "valueType": "string",
-            "name": "title",
-            "label": "Title"
-          },
-          {
-            "component": "textarea",
-            "valueType": "string",
-            "name": "description",
-            "label": "Description"
-          },
-          {
-            "component": "aem-content",
-            "valueType": "string",
-            "name": "link",
-            "label": "Button Link"
-          },
-          {
-            "component": "text",
-            "valueType": "string",
-            "name": "linkText",
-            "label": "Button Text"
-          },
-          {
-            "component": "reference",
-            "valueType": "string",
-            "name": "authorImage",
-            "label": "Author Photo",
-            "multi": false
-          },
-          {
-            "component": "text",
-            "valueType": "string",
-            "name": "authorName",
-            "label": "Author Name"
-          },
-          {
-            "component": "text",
-            "valueType": "string",
-            "name": "authorRole",
-            "label": "Author Role"
+            "name": "H4",
+            "value": "h4"
           }
         ]
+      },
+      {
+        "component": "textarea",
+        "valueType": "string",
+        "name": "content_description",
+        "label": "Description"
+      },
+      {
+        "component": "aem-content",
+        "valueType": "string",
+        "name": "content_cta",
+        "label": "Button Link"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "content_ctaText",
+        "label": "Button Text"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "author_image",
+        "label": "Author Photo",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "author_name",
+        "label": "Author Name"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "author_role",
+        "label": "Author Role"
       }
     ]
   },
