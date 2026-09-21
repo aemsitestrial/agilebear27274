@@ -94,7 +94,8 @@
         {"...": "./_common-blocks.json"},
         "product-teaser",
         "product-recommendations",
-        "article-cards"
+        "article-cards",
+        "product-platform"
       ]
     },
     {
