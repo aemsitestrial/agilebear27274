@@ -1,11 +1,11 @@
 .article-cards {
-  --article-ink: #111111;
+  --article-ink: #111;
   --article-body: #2f3032;
   --article-muted: #6d6d6d;
   --article-line: #dedede;
   --article-pill: #e5e9ec;
   --article-featured: #e4e4e4;
-  --article-white: #ffffff;
+  --article-white: #fff;
   --article-gap: 32px;
   --article-content-padding: 0;
 }
@@ -209,7 +209,7 @@
   top: 5px;
   width: 14px;
   height: 1px;
-  background: currentColor;
+  background: currentcolor;
 }
 
 .article-cards-cta-arrow::after {
@@ -219,8 +219,8 @@
   top: 2px;
   width: 7px;
   height: 7px;
-  border-top: 1px solid currentColor;
-  border-right: 1px solid currentColor;
+  border-top: 1px solid currentcolor;
+  border-right: 1px solid currentcolor;
   transform: rotate(45deg);
 }
 
