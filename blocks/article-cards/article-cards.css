@@ -1,125 +1,92 @@
 .article-cards {
-  --article-ink: #111;
-  --article-body: #2f3032;
-  --article-muted: #6d6d6d;
-  --article-line: #dedede;
-  --article-pill: #e5e9ec;
-  --article-featured: #e4e4e4;
-  --article-white: #fff;
-  --article-gap: 32px;
-  --article-content-padding: 0;
+  --article-bg: #fff;
+  --article-featured-bg: #e6e6e6;
+  --article-text: #1f1f1f;
+  --article-muted: #646464;
+  --article-tag-bg: #dce6f4;
+
+  width: 100%;
 }
 
 .article-cards > div {
   margin: 0;
 }
 
-/* ---------------------------------------------------------
-   GRID
---------------------------------------------------------- */
+/* GRID */
 
 .article-cards-list {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--article-gap);
+  gap: 16px;
+  list-style: none;
   margin: 0;
   padding: 0;
-  list-style: none;
-  align-items: stretch;
 }
 
 .article-cards-item {
-  min-width: 0;
   display: flex;
-  margin: 0;
-  padding: 0;
 }
 
-/* ---------------------------------------------------------
-   CARD
---------------------------------------------------------- */
+/* CARD */
 
 .article-cards-card {
   width: 100%;
-  min-width: 0;
-  min-height: 100%;
+  min-height: 664px;
   display: flex;
   flex-direction: column;
-  background: var(--article-white);
-  color: var(--article-ink);
+  background: var(--article-bg);
 }
 
-/* ---------------------------------------------------------
-   IMAGE CARD
---------------------------------------------------------- */
+/* IMAGE */
 
 .article-cards-image-wrapper {
   width: 100%;
-  aspect-ratio: 16 / 9;
+  height: 190px;
   overflow: hidden;
-  margin: 0 0 22px;
-  background: #f1f1f1;
+  margin-bottom: 16px;
 }
 
-.article-cards-image {
+.article-cards-image,
+.article-cards-image picture,
+.article-cards-image img {
   display: block;
   width: 100%;
   height: 100%;
 }
 
 .article-cards-image img {
-  display: block;
-  width: 100%;
-  height: 100%;
   object-fit: cover;
 }
 
-/* ---------------------------------------------------------
-   CONTENT
---------------------------------------------------------- */
+/* CONTENT */
 
 .article-cards-content {
-  flex: 1;
-  min-width: 0;
   display: flex;
   flex-direction: column;
+  flex: 1;
 }
 
-/* ---------------------------------------------------------
-   META ROW
---------------------------------------------------------- */
+/* META */
 
 .article-cards-meta {
   display: flex;
   align-items: center;
-  gap: 10px;
-  min-width: 0;
-  margin: 0 0 18px;
-  font-size: 12px;
-  line-height: 1.2;
-  font-weight: 500;
+  gap: 12px;
+  margin-bottom: 16px;
+  font-size: 11px;
   text-transform: uppercase;
-  letter-spacing: 0.015em;
-  white-space: nowrap;
 }
 
 .article-cards-tag {
-  display: inline-flex;
-  align-items: center;
-  min-height: 22px;
-  padding: 4px 9px;
-  background: var(--article-pill);
-  color: var(--article-ink);
-  font-size: 11px;
+  background: var(--article-tag-bg);
+  padding: 4px 8px;
+  font-size: 10px;
   line-height: 1;
-  font-weight: 700;
-  text-transform: uppercase;
+  color: var(--article-text);
 }
 
 .article-cards-category {
   color: var(--article-muted);
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .article-cards-read-time {
@@ -127,87 +94,69 @@
   color: var(--article-muted);
 }
 
-/* ---------------------------------------------------------
-   PUBLISHED
---------------------------------------------------------- */
+/* PUBLISHED */
 
 .article-cards-published {
-  margin: 0 0 20px;
-  color: var(--article-body);
-  font-size: 16px;
-  line-height: 1.45;
+  font-size: 14px;
+  color: #4a4a4a;
+  margin-bottom: 14px;
 }
 
-/* ---------------------------------------------------------
-   TITLE
---------------------------------------------------------- */
+/* TITLE */
 
 .article-cards-title {
-  max-width: 100%;
-  margin: 0 0 20px;
-  color: var(--article-ink);
-  font-size: 31px;
-  line-height: 1.08;
+  margin: 0 0 16px;
+  color: var(--article-text);
+  font-size: 24px;
+  line-height: 1.15;
   font-weight: 400;
-  letter-spacing: -0.025em;
 }
 
 .article-cards-title strong {
   font-weight: 700;
 }
 
-/* ---------------------------------------------------------
-   DESCRIPTION
---------------------------------------------------------- */
+/* DESCRIPTION */
 
 .article-cards-description {
   margin: 0;
-  color: var(--article-body);
-  font-size: 17px;
-  line-height: 1.55;
-  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.7;
+  color: #333;
 }
 
-/* ---------------------------------------------------------
-   CTA
---------------------------------------------------------- */
+/* CTA */
 
 .article-cards-cta-wrapper {
   margin-top: auto;
-  padding-top: 30px;
+  padding-top: 24px;
 }
 
 .article-cards-cta {
   display: inline-flex;
   align-items: center;
-  gap: 11px;
-  min-height: 40px;
-  color: var(--article-ink);
-  font-size: 15px;
-  line-height: 1.2;
-  font-weight: 500;
+  gap: 10px;
+  color: var(--article-text);
   text-decoration: none;
+  font-size: 16px;
 }
 
 .article-cards-cta:hover {
-  text-decoration: underline;
-  text-underline-offset: 4px;
+  text-decoration: none;
 }
 
 .article-cards-cta-arrow {
+  width: 14px;
+  height: 14px;
   position: relative;
-  display: inline-block;
-  width: 17px;
-  height: 12px;
-  flex: 0 0 17px;
 }
 
 .article-cards-cta-arrow::before {
   content: '';
   position: absolute;
   left: 0;
-  top: 5px;
-  width: 14px;
+  top: 6px;
+  width: 12px;
   height: 1px;
   background: currentcolor;
 }
@@ -217,209 +166,108 @@
   position: absolute;
   right: 0;
   top: 2px;
-  width: 7px;
-  height: 7px;
+  width: 6px;
+  height: 6px;
   border-top: 1px solid currentcolor;
   border-right: 1px solid currentcolor;
   transform: rotate(45deg);
 }
 
-/* ---------------------------------------------------------
-   DOWNLOAD / DARK CTA
---------------------------------------------------------- */
-
-.article-cards-card--featured .article-cards-cta {
-  min-height: 42px;
-  padding: 0 17px;
-  background: #111;
-  color: #fff;
-  text-decoration: none;
-}
-
-.article-cards-card--featured .article-cards-cta:hover {
-  background: #2a2a2a;
-  text-decoration: none;
-}
-
-.article-cards-card--featured .article-cards-cta-arrow {
-  color: #fff;
-}
-
-/* ---------------------------------------------------------
-   AUTHOR
---------------------------------------------------------- */
+/* AUTHOR */
 
 .article-cards-author {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   margin-top: 28px;
-  padding-bottom: 2px;
 }
 
 .article-cards-author-image {
   width: 40px;
   height: 40px;
-  flex: 0 0 40px;
   overflow: hidden;
   border-radius: 50%;
+  flex-shrink: 0;
 }
 
 .article-cards-author-image img {
-  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
 .article-cards-author-info {
-  min-width: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .article-cards-author-name {
-  margin: 0;
-  color: var(--article-ink);
   font-size: 14px;
-  line-height: 1.2;
-  font-weight: 500;
+  color: var(--article-text);
 }
 
 .article-cards-author-role {
-  margin-top: 3px;
-  color: var(--article-muted);
   font-size: 10px;
-  line-height: 1.25;
-  font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.02em;
+  color: var(--article-muted);
+  margin-top: 2px;
 }
 
-/* ---------------------------------------------------------
-   FEATURED CARD
---------------------------------------------------------- */
+/* FEATURED CARD */
 
 .article-cards-card--featured {
-  box-sizing: border-box;
-  padding: 30px 30px 28px;
-  background: var(--article-featured);
-}
-
-.article-cards-card--featured .article-cards-content {
-  min-height: 100%;
-}
-
-.article-cards-card--featured .article-cards-meta {
-  margin-bottom: 18px;
-}
-
-.article-cards-card--featured .article-cards-published {
-  margin-bottom: 20px;
+  background: var(--article-featured-bg);
+  padding: 18px;
 }
 
 .article-cards-card--featured .article-cards-title {
-  font-size: 34px;
-  line-height: 1.06;
-  letter-spacing: -0.03em;
+  font-size: 28px;
+  line-height: 1.15;
 }
 
-/* ---------------------------------------------------------
-   NORMAL CARDS
---------------------------------------------------------- */
-
-.article-cards-card:not(.article-cards-card--featured) {
-  padding: 0;
+.article-cards-card--featured .article-cards-cta {
+  background: #1a1a1a;
+  color: #fff;
+  padding: 12px 18px;
 }
 
-/* ---------------------------------------------------------
-   DESKTOP
---------------------------------------------------------- */
+.article-cards-card--featured .article-cards-cta:hover {
+  background: #2a2a2a;
+}
+
+/* DESKTOP */
 
 @media (min-width: 1200px) {
-  .article-cards-list {
-    gap: 34px;
-  }
-
-  .article-cards-title {
-    font-size: 31px;
-  }
-
-  .article-cards-card--featured .article-cards-title {
-    font-size: 35px;
+  .article-cards-card {
+    min-height: 664px;
   }
 }
 
-/* ---------------------------------------------------------
-   TABLET
---------------------------------------------------------- */
+/* TABLET */
 
-@media (max-width: 899px) {
+@media (max-width: 991px) {
   .article-cards-list {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 30px 24px;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .article-cards-card {
+    min-height: auto;
+  }
+}
+
+/* MOBILE */
+
+@media (max-width: 767px) {
+  .article-cards-list {
+    grid-template-columns: 1fr;
   }
 
   .article-cards-title,
   .article-cards-card--featured .article-cards-title {
     font-size: 28px;
-  }
-
-  .article-cards-card--featured {
-    padding: 26px;
-  }
-}
-
-/* ---------------------------------------------------------
-   MOBILE
---------------------------------------------------------- */
-
-@media (max-width: 599px) {
-  .article-cards-list {
-    grid-template-columns: 1fr;
-    gap: 40px;
   }
 
   .article-cards-image-wrapper {
-    margin-bottom: 18px;
-  }
-
-  .article-cards-meta {
-    margin-bottom: 15px;
-  }
-
-  .article-cards-published {
-    margin-bottom: 16px;
-    font-size: 15px;
-  }
-
-  .article-cards-title,
-  .article-cards-card--featured .article-cards-title {
-    font-size: 28px;
-    line-height: 1.08;
-  }
-
-  .article-cards-description {
-    font-size: 16px;
-    line-height: 1.5;
-  }
-
-  .article-cards-card--featured {
-    padding: 24px;
-  }
-
-  .article-cards-cta-wrapper {
-    padding-top: 25px;
-  }
-}
-
-/* ---------------------------------------------------------
-   ACCESSIBILITY
---------------------------------------------------------- */
-
-@media (prefers-reduced-motion: reduce) {
-  .article-cards *,
-  .article-cards *::before,
-  .article-cards *::after {
-    scroll-behavior: auto;
-    transition: none;
+    height: 220px;
   }
 }

@@ -24,7 +24,7 @@
       "fragment",
       "product-teaser",
       "product-recommendations",
-      "article-card"
+      "article-cards"
     ]
   },
   {
@@ -154,8 +154,7 @@
       "cards",
       "columns",
       "fragment",
-      "commerce-search-order",
-      "article-card"
+      "commerce-search-order"
     ]
   },
   {
@@ -388,6 +387,12 @@
     ]
   },
   {
+    "id": "article-cards",
+    "components": [
+      "article-card"
+    ]
+  },
+  {
     "id": "cards",
     "components": [
       "card"
@@ -406,12 +411,6 @@
       "image",
       "button",
       "title"
-    ]
-  },
-  {
-    "id": "article-cards",
-    "components": [
-      "article-card"
     ]
   }
 ]

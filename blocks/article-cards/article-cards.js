@@ -186,7 +186,10 @@ function createDescription(fields) {
 }
 
 function createCTA(fields) {
-  if (!fields.ctaText && !fields.ctaLink) {
+  if (
+    !fields.ctaText
+    && !fields.ctaLink
+  ) {
     return null;
   }
 
