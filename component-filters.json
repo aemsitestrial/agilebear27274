@@ -414,9 +414,10 @@
     ]
   },
   {
-    "id": "article-cards",
+    "id": "product-platform",
     "components": [
-      "article-card"
+      "product-platform-header",
+      "product-platform-item"
     ]
   }
 ]

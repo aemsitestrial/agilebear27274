@@ -1,0 +1,134 @@
+.product-platform-container {
+  background-color: #fff;
+}
+
+.product-platform-wrapper {
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.product-platform {
+  box-sizing: border-box;
+  min-height: 711px;
+  padding: 130px 72px 90px;
+  background-color: #fff;
+  color: #1f1f1f;
+}
+
+.product-platform p {
+  margin: 0;
+}
+
+.product-platform .product-platform-header {
+  margin-bottom: 68px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 32px;
+  align-items: center;
+}
+
+.product-platform .product-platform-title {
+  font-family: var(--body-font-family);
+  font-size: 36px;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.product-platform .product-platform-view-all a:any-link,
+.product-platform .product-platform-link a:any-link {
+  position: relative;
+  display: inline-block;
+  box-sizing: border-box;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  padding: 4px 30px 4px 0;
+  background: none;
+  color: #1f1f1f;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.3;
+  text-align: left;
+  text-decoration: none;
+  white-space: normal;
+}
+
+.product-platform .product-platform-view-all a::after,
+.product-platform .product-platform-link a::after {
+  content: '\2192';
+  position: absolute;
+  top: 50%;
+  right: 0;
+  font-size: 22px;
+  line-height: 1;
+  transform: translateY(-50%);
+}
+
+.product-platform .product-platform-view-all a:hover,
+.product-platform .product-platform-view-all a:focus,
+.product-platform .product-platform-link a:hover,
+.product-platform .product-platform-link a:focus {
+  background: none;
+  color: #666;
+  text-decoration: none;
+}
+
+.product-platform .product-platform-item {
+  min-height: 116px;
+  border-bottom: 1px solid #777;
+  display: grid;
+  grid-template-columns: minmax(150px, 0.8fr) minmax(320px, 2.2fr) minmax(180px, 0.8fr);
+  gap: 40px;
+  align-items: center;
+}
+
+.product-platform .product-platform-brand {
+  font-family: var(--body-font-family);
+  font-size: 34px;
+  font-weight: 400;
+  line-height: 1.15;
+}
+
+.product-platform .product-platform-description {
+  font-size: 16px;
+  line-height: 1.35;
+}
+
+.product-platform .product-platform-link {
+  justify-self: end;
+}
+
+@media (max-width: 899px) {
+  .product-platform {
+    min-height: auto;
+    padding: 72px 24px;
+  }
+
+  .product-platform .product-platform-header {
+    margin-bottom: 44px;
+  }
+
+  .product-platform .product-platform-item {
+    padding: 28px 0;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .product-platform .product-platform-link {
+    justify-self: start;
+  }
+}
+
+@media (max-width: 599px) {
+  .product-platform .product-platform-header {
+    grid-template-columns: 1fr;
+  }
+
+  .product-platform .product-platform-title {
+    font-size: 30px;
+  }
+
+  .product-platform .product-platform-brand {
+    font-size: 28px;
+  }
+}
