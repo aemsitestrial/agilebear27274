@@ -1,34 +1,22 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
-const TITLE_TYPES = ['h2', 'h3', 'h4'];
+const getText = (element) => element?.textContent?.trim() || '';
 
-function getText(element) {
-  return element?.textContent?.trim() || '';
-}
-
-function getImage(element) {
+const getImage = (element) => {
   if (!element) return null;
-
-  if (element.matches('img')) {
-    return element;
-  }
 
   return element.querySelector('img');
-}
+};
 
-function getLink(element) {
+const getLink = (element) => {
   if (!element) return null;
 
-  if (element.matches('a')) {
-    return element;
-  }
-
   return element.querySelector('a');
-}
+};
 
-function createElement(tagName, className, text) {
-  const element = document.createElement(tagName);
+const createElement = (tag, className, text = '') => {
+  const element = document.createElement(tag);
 
   if (className) {
     element.className = className;
@@ -39,204 +27,210 @@ function createElement(tagName, className, text) {
   }
 
   return element;
-}
+};
 
 /**
- * Get article-card items from Universal Editor markup.
+ * Get Article Card item blocks.
  *
- * Supported structures:
+ * Universal Editor can produce slightly different wrapper structures
+ * depending on the container/item configuration, so this supports:
  *
- * 1. data-aue-model wrappers
- * 2. Direct child item wrappers
- * 3. Flat EDS markup separated by horizontal rules
+ * .article-card
+ * direct child items
+ * nested child wrappers
  */
-function getCardItems(block) {
-  const modelItems = [
-    ...block.querySelectorAll(':scope > [data-aue-model="article-card"]'),
+function getArticleCardItems(block) {
+  const explicitItems = [
+    ...block.querySelectorAll(':scope > .article-card'),
   ];
 
-  if (modelItems.length) {
-    return modelItems;
+  if (explicitItems.length) {
+    return explicitItems;
   }
 
   const directChildren = [...block.children];
 
-  const itemChildren = directChildren.filter(
-    (child) => child.children.length > 0,
-  );
+  if (
+    directChildren.length
+    && directChildren.every((child) => child.children.length)
+  ) {
+    const nestedItems = directChildren.flatMap((child) => [
+      ...child.children,
+    ]);
 
-  if (itemChildren.length) {
-    return itemChildren;
-  }
-
-  const cards = [];
-  let current = [];
-
-  directChildren.forEach((child) => {
-    if (child.tagName === 'HR') {
-      if (current.length) {
-        cards.push(current);
-        current = [];
-      }
-    } else {
-      current.push(child);
+    if (nestedItems.length) {
+      return nestedItems;
     }
-  });
-
-  if (current.length) {
-    cards.push(current);
   }
 
-  return cards;
+  return directChildren;
 }
 
-function getFields(item) {
-  const elements = Array.isArray(item)
-    ? item
-    : [...item.children];
+/**
+ * Extract the 14 authored fields from one Article Card.
+ */
+function getCardFields(card) {
+  const rows = [...card.children];
+
+  /*
+   * Universal Editor item markup normally becomes:
+   *
+   * <div>
+   *   <div>image</div>
+   *   <div>alt</div>
+   *   <div>tag</div>
+   *   ...
+   * </div>
+   *
+   * Some generated markup can contain one additional wrapper.
+   */
+  let cells = rows;
+
+  if (
+    rows.length === 1
+    && rows[0].children.length > 1
+  ) {
+    cells = [...rows[0].children];
+  }
+
+  const getCell = (index) => cells[index] || null;
 
   return {
-    image: elements[0],
-    imageAlt: elements[1],
-    tag: elements[2],
-    category: elements[3],
-    readTime: elements[4],
-    published: elements[5],
-    title: elements[6],
-    titleType: elements[7],
-    description: elements[8],
-    cta: elements[9],
-    ctaText: elements[10],
-    authorImage: elements[11],
-    authorName: elements[12],
-    authorRole: elements[13],
+    image: getImage(getCell(0)),
+    imageAlt: getText(getCell(1)),
+    tag: getText(getCell(2)),
+    category: getText(getCell(3)),
+    readTime: getText(getCell(4)),
+    published: getText(getCell(5)),
+    title: getText(getCell(6)),
+    titleLevel: getText(getCell(7)) || 'h3',
+    description: getText(getCell(8)),
+    ctaLink: getLink(getCell(9)),
+    ctaText: getText(getCell(10)),
+    authorImage: getImage(getCell(11)),
+    authorName: getText(getCell(12)),
+    authorRole: getText(getCell(13)),
   };
 }
 
-function buildMeta(fields) {
-  const tag = getText(fields.tag);
-  const category = getText(fields.category);
-  const readTime = getText(fields.readTime);
+function createMeta(fields) {
+  const meta = createElement('div', 'article-cards-meta');
 
-  if (!tag && !category && !readTime) {
-    return null;
+  if (fields.tag) {
+    const tag = createElement(
+      'span',
+      'article-cards-tag',
+      fields.tag,
+    );
+
+    meta.append(tag);
   }
 
-  const meta = createElement(
-    'div',
-    'article-cards-meta',
-  );
-
-  if (tag) {
-    meta.append(
-      createElement(
-        'span',
-        'article-cards-tag',
-        tag,
-      ),
+  if (fields.category) {
+    const category = createElement(
+      'span',
+      'article-cards-category',
+      fields.category,
     );
+
+    meta.append(category);
   }
 
-  if (category) {
-    meta.append(
-      createElement(
-        'span',
-        'article-cards-category',
-        category,
-      ),
+  if (fields.readTime) {
+    const readTime = createElement(
+      'span',
+      'article-cards-read-time',
+      fields.readTime,
     );
-  }
 
-  if (readTime) {
-    meta.append(
-      createElement(
-        'span',
-        'article-cards-readTime',
-        readTime,
-      ),
-    );
+    meta.append(readTime);
   }
 
   return meta;
 }
 
-function buildTitle(fields) {
-  const title = getText(fields.title);
+function createPublished(fields) {
+  if (!fields.published) return null;
 
-  if (!title) {
-    return null;
-  }
-
-  const authoredType = getText(fields.titleType);
-
-  const titleType = TITLE_TYPES.includes(authoredType)
-    ? authoredType
-    : 'h3';
-
-  const heading = createElement(
-    titleType,
-    null,
-    title,
+  return createElement(
+    'div',
+    'article-cards-published',
+    fields.published,
   );
-
-  if (fields.title) {
-    moveInstrumentation(
-      fields.title,
-      heading,
-    );
-  }
-
-  return heading;
 }
 
-function buildCTA(fields, isFeatured) {
-  const ctaText = getText(fields.ctaText);
-  const authoredLink = getLink(fields.cta);
+function createTitle(fields) {
+  const allowedLevels = ['h2', 'h3', 'h4'];
 
-  if (!ctaText && !authoredLink) {
+  const level = allowedLevels.includes(fields.titleLevel)
+    ? fields.titleLevel
+    : 'h3';
+
+  const title = createElement(
+    level,
+    'article-cards-title',
+    fields.title,
+  );
+
+  return title;
+}
+
+function createDescription(fields) {
+  if (!fields.description) return null;
+
+  return createElement(
+    'p',
+    'article-cards-description',
+    fields.description,
+  );
+}
+
+function createCTA(fields) {
+  if (!fields.ctaText && !fields.ctaLink) {
     return null;
   }
+
+  const cta = createElement(
+    'div',
+    'article-cards-cta-wrapper',
+  );
 
   const link = document.createElement('a');
 
   link.className = 'article-cards-cta';
 
-  if (authoredLink?.href) {
-    link.href = authoredLink.href;
+  if (fields.ctaLink?.href) {
+    link.href = fields.ctaLink.href;
   }
 
-  if (authoredLink?.target) {
-    link.target = authoredLink.target;
+  if (fields.ctaLink?.target) {
+    link.target = fields.ctaLink.target;
   }
 
-  if (authoredLink?.rel) {
-    link.rel = authoredLink.rel;
+  if (fields.ctaLink?.rel) {
+    link.rel = fields.ctaLink.rel;
   }
 
-  link.textContent = ctaText
-    || getText(authoredLink)
-    || 'Read more';
+  link.textContent = fields.ctaText || getText(fields.ctaLink);
 
-  if (isFeatured) {
-    link.classList.add(
-      'article-cards-cta-featured',
-    );
-  }
-
-  return link;
-}
-
-function buildAuthor(fields) {
-  const authorName = getText(fields.authorName);
-  const authorRole = getText(fields.authorRole);
-  const authorImage = getImage(
-    fields.authorImage,
+  const arrow = createElement(
+    'span',
+    'article-cards-cta-arrow',
   );
 
+  arrow.setAttribute('aria-hidden', 'true');
+
+  link.append(arrow);
+  cta.append(link);
+
+  return cta;
+}
+
+function createAuthor(fields) {
   if (
-    !authorName
-    && !authorRole
-    && !authorImage
+    !fields.authorImage
+    && !fields.authorName
+    && !fields.authorRole
   ) {
     return null;
   }
@@ -246,269 +240,171 @@ function buildAuthor(fields) {
     'article-cards-author',
   );
 
-  if (authorImage) {
-    const avatar = createElement(
-      'div',
-      'article-cards-avatar',
+  if (fields.authorImage) {
+    const authorImage = createOptimizedPicture(
+      fields.authorImage.src,
+      fields.authorImage.alt || fields.authorName || 'Author',
+      false,
+      [
+        {
+          width: 96,
+        },
+      ],
     );
 
-    avatar.append(authorImage);
+    authorImage.className = 'article-cards-author-image';
 
-    author.append(avatar);
+    author.append(authorImage);
   }
 
-  if (authorName || authorRole) {
-    const authorInfo = createElement(
-      'div',
-      'article-cards-author-info',
+  const authorInfo = createElement(
+    'div',
+    'article-cards-author-info',
+  );
+
+  if (fields.authorName) {
+    authorInfo.append(
+      createElement(
+        'div',
+        'article-cards-author-name',
+        fields.authorName,
+      ),
     );
-
-    if (authorName) {
-      authorInfo.append(
-        createElement(
-          'div',
-          'article-cards-authorName',
-          authorName,
-        ),
-      );
-    }
-
-    if (authorRole) {
-      authorInfo.append(
-        createElement(
-          'div',
-          'article-cards-authorRole',
-          authorRole,
-        ),
-      );
-    }
-
-    author.append(authorInfo);
   }
+
+  if (fields.authorRole) {
+    authorInfo.append(
+      createElement(
+        'div',
+        'article-cards-author-role',
+        fields.authorRole,
+      ),
+    );
+  }
+
+  author.append(authorInfo);
 
   return author;
 }
 
-function buildCard(item) {
-  const fields = getFields(item);
+function createArticleCard(card, index) {
+  const fields = getCardFields(card);
 
-  const image = getImage(fields.image);
-  const imageAlt = getText(
-    fields.imageAlt,
-  );
+  /*
+   * NO IMAGE = FEATURED CARD
+   *
+   * This is what produces the grey middle card
+   * shown in your reference image.
+   */
+  const isFeatured = !fields.image;
 
-  const isFeatured = !image;
+  const article = document.createElement('article');
 
-  const card = document.createElement('li');
+  article.className = 'article-cards-card';
 
   if (isFeatured) {
-    card.classList.add('is-featured');
+    article.classList.add('article-cards-card--featured');
   }
 
-  /*
-   * Standard card image.
-   *
-   * Featured cards intentionally do not render
-   * an image container.
-   */
-  if (image) {
-    image.alt = imageAlt;
+  article.dataset.cardIndex = String(index + 1);
 
+  moveInstrumentation(card, article);
+
+  /*
+   * Image area
+   */
+  if (fields.image && !isFeatured) {
     const imageWrapper = createElement(
       'div',
-      'article-cards-image',
+      'article-cards-image-wrapper',
     );
 
-    imageWrapper.append(image);
+    const picture = createOptimizedPicture(
+      fields.image.src,
+      fields.image.alt || fields.imageAlt || '',
+      false,
+      [
+        {
+          media: '(min-width: 900px)',
+          width: 750,
+        },
+        {
+          width: 600,
+        },
+      ],
+    );
 
-    card.append(imageWrapper);
+    picture.className = 'article-cards-image';
+
+    imageWrapper.append(picture);
+    article.append(imageWrapper);
   }
 
   /*
-   * Main content area.
+   * Content area
    */
   const content = createElement(
     'div',
     'article-cards-content',
   );
 
-  /*
-   * Metadata.
-   */
-  const meta = buildMeta(fields);
+  const meta = createMeta(fields);
 
-  if (meta) {
+  if (meta.children.length) {
     content.append(meta);
   }
 
-  /*
-   * Published text.
-   */
-  const published = getText(
-    fields.published,
-  );
+  const published = createPublished(fields);
 
   if (published) {
-    content.append(
-      createElement(
-        'div',
-        'article-cards-published',
-        published,
-      ),
-    );
+    content.append(published);
   }
 
-  /*
-   * Title + description.
-   */
-  const text = createElement(
-    'div',
-    'article-cards-text',
-  );
-
-  const title = buildTitle(fields);
-
-  if (title) {
-    text.append(title);
+  if (fields.title) {
+    content.append(createTitle(fields));
   }
 
-  const description = getText(
-    fields.description,
-  );
+  const description = createDescription(fields);
 
   if (description) {
-    text.append(
-      createElement(
-        'p',
-        null,
-        description,
-      ),
-    );
+    content.append(description);
   }
 
-  content.append(text);
-
-  /*
-   * CTA.
-   */
-  const cta = buildCTA(
-    fields,
-    isFeatured,
-  );
+  const cta = createCTA(fields);
 
   if (cta) {
-    const ctaWrapper = createElement(
-      'div',
-      'article-cards-link',
-    );
-
-    ctaWrapper.append(cta);
-
-    content.append(ctaWrapper);
+    content.append(cta);
   }
 
-  card.append(content);
-
-  /*
-   * Author.
-   */
-  const author = buildAuthor(fields);
+  const author = createAuthor(fields);
 
   if (author) {
-    card.append(author);
+    content.append(author);
   }
 
-  return card;
-}
+  article.append(content);
 
-function optimizeMainImages(block) {
-  block
-    .querySelectorAll(
-      '.article-cards-image picture > img',
-    )
-    .forEach((img) => {
-      const picture = img.closest('picture');
-
-      if (!picture) {
-        return;
-      }
-
-      const optimizedPicture = createOptimizedPicture(
-        img.src,
-        img.alt || '',
-        false,
-        [{ width: '750' }],
-      );
-
-      const optimizedImage = optimizedPicture.querySelector('img');
-
-      if (optimizedImage) {
-        moveInstrumentation(
-          img,
-          optimizedImage,
-        );
-      }
-
-      picture.replaceWith(
-        optimizedPicture,
-      );
-    });
-}
-
-function optimizeAuthorImages(block) {
-  block
-    .querySelectorAll(
-      '.article-cards-avatar picture > img',
-    )
-    .forEach((img) => {
-      const picture = img.closest('picture');
-
-      if (!picture) {
-        return;
-      }
-
-      const optimizedPicture = createOptimizedPicture(
-        img.src,
-        img.alt || '',
-        false,
-        [{ width: '96' }],
-      );
-
-      const optimizedImage = optimizedPicture.querySelector('img');
-
-      if (optimizedImage) {
-        moveInstrumentation(
-          img,
-          optimizedImage,
-        );
-      }
-
-      picture.replaceWith(
-        optimizedPicture,
-      );
-    });
+  return article;
 }
 
 export default function decorate(block) {
-  const items = getCardItems(block);
+  const items = getArticleCardItems(block);
 
-  const ul = document.createElement('ul');
+  const list = document.createElement('ul');
 
-  items.forEach((item) => {
-    const card = buildCard(item);
+  list.className = 'article-cards-list';
 
-    if (!Array.isArray(item)) {
-      moveInstrumentation(
-        item,
-        card,
-      );
-    }
+  items.forEach((item, index) => {
+    const listItem = document.createElement('li');
 
-    ul.append(card);
+    listItem.className = 'article-cards-item';
+
+    listItem.append(
+      createArticleCard(item, index),
+    );
+
+    list.append(listItem);
   });
 
-  block.replaceChildren(ul);
-
-  optimizeMainImages(block);
-  optimizeAuthorImages(block);
+  block.replaceChildren(list);
 }

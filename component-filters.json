@@ -412,5 +412,11 @@
       "button",
       "title"
     ]
+  },
+  {
+    "id": "article-cards",
+    "components": [
+      "article-card"
+    ]
   }
 ]
