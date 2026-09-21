@@ -412,5 +412,12 @@
       "button",
       "title"
     ]
+  },
+  {
+    "id": "product-platform",
+    "components": [
+      "product-platform-header",
+      "product-platform-item"
+    ]
   }
 ]
