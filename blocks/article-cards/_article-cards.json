@@ -37,102 +37,88 @@
       "fields": [
         {
           "component": "reference",
-          "valueType": "string",
           "name": "image",
-          "label": "Image (leave empty for featured card)",
+          "label": "Image",
           "multi": false
         },
         {
           "component": "text",
-          "valueType": "string",
           "name": "imageAlt",
           "label": "Image Alt Text"
         },
         {
           "component": "text",
-          "valueType": "string",
           "name": "meta_tag",
           "label": "Tag"
         },
         {
           "component": "text",
-          "valueType": "string",
           "name": "meta_category",
           "label": "Category"
         },
         {
           "component": "text",
-          "valueType": "string",
           "name": "meta_readTime",
           "label": "Read Time"
         },
         {
           "component": "text",
-          "valueType": "string",
           "name": "meta_published",
           "label": "Published Text"
         },
         {
           "component": "text",
-          "valueType": "string",
           "name": "content_title",
           "label": "Title"
         },
         {
           "component": "select",
-          "valueType": "string",
           "name": "content_titleType",
           "label": "Title Level",
           "value": "h3",
           "options": [
             {
-              "name": "H2",
+              "name": "Heading 2",
               "value": "h2"
             },
             {
-              "name": "H3",
+              "name": "Heading 3",
               "value": "h3"
             },
             {
-              "name": "H4",
+              "name": "Heading 4",
               "value": "h4"
             }
           ]
         },
         {
           "component": "textarea",
-          "valueType": "string",
           "name": "content_description",
           "label": "Description"
         },
         {
           "component": "aem-content",
-          "valueType": "string",
           "name": "content_cta",
-          "label": "Button Link"
+          "label": "CTA"
         },
         {
           "component": "text",
-          "valueType": "string",
           "name": "content_ctaText",
-          "label": "Button Text"
+          "label": "CTA Text"
         },
         {
           "component": "reference",
-          "valueType": "string",
           "name": "author_image",
-          "label": "Author Photo",
+          "label": "Author Image",
           "multi": false
         },
         {
           "component": "text",
-          "valueType": "string",
           "name": "author_name",
           "label": "Author Name"
         },
         {
           "component": "text",
-          "valueType": "string",
           "name": "author_role",
           "label": "Author Role"
         }
@@ -148,3 +134,4 @@
     }
   ]
 }
+
