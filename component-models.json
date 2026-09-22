@@ -589,6 +589,38 @@
     ]
   },
   {
+    "id": "richtextcta",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "heading",
+        "label": "Heading",
+        "required": true
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "description",
+        "label": "Description",
+        "required": true
+      },
+      {
+        "component": "text",
+        "valueType": "string[]",
+        "name": "questions",
+        "label": "Questions",
+        "multi": true
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "cta",
+        "label": "CTA"
+      }
+    ]
+  },
+  {
     "id": "page-metadata",
     "fields": [
       {
